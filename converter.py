@@ -7,6 +7,8 @@ import xml.etree.ElementTree as ET
 def voc_to_json(path, output=None):
     """Covert VOC to JSON."""
     result = []
+    output = output or os.path.join(path, 'output.json')
+
     for voc in os.listdir(path):
         with open(os.path.join(path, voc), 'r') as fp:
             _, ext = os.path.splitext(voc)
@@ -37,7 +39,10 @@ def voc_to_json(path, output=None):
 
             result.append(elem)
 
-    with open(os.path.join(output or path, 'output.json'), 'w') as fp:
+    if not os.path.exists(output):
+        os.mkdir(output)
+
+    with open(os.path.join(output), 'w') as fp:
         json.dump(result, fp)
 
 
