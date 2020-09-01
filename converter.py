@@ -3,11 +3,12 @@ import json
 import argparse
 import xml.etree.ElementTree as ET
 
+from util import get_output
+
 
 def voc_to_json(path, output=None):
     """Covert VOC to JSON."""
     result = []
-    output = output or os.path.join(path, 'output.json')
 
     for voc in os.listdir(path):
         with open(os.path.join(path, voc), 'r') as fp:
@@ -39,9 +40,6 @@ def voc_to_json(path, output=None):
 
             result.append(elem)
 
-    if not os.path.exists(output):
-        os.mkdir(output)
-
     with open(os.path.join(output), 'w') as fp:
         json.dump(result, fp)
 
@@ -55,4 +53,5 @@ if __name__ == '__main__':
     if not kwargs.input:
         exit('Please pass required "--input" argument')
 
-    voc_to_json(kwargs.input, kwargs.output)
+    output = get_output(kwargs, os.path.join(kwargs.input, 'output.json'))
+    voc_to_json(kwargs.input, output)

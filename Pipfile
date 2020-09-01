@@ -10,6 +10,7 @@ pdbpp = "*"
 lxml = "*"
 pyqt5 = "*"
 ffmpeg-python = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"
